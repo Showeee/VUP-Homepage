@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
+    <link rel="stylesheet"
+        href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        html,
+        body,
+        #scene {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        #scene .bg-img {
+            width: 120%;
+            height: 120%;
+            translate: -10% -10%;
+            object-fit: cover;
+        }
+
+        #scene .fg-img {
+            width: 120%;
+            height: 120%;
+            translate: -10% -10%;
+            object-fit: cover;
+        }
+
+        .mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1;
+            transition: background-color 0.5s ease;
+        }
+
+        body:hover .mask {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .character-img {
+            height: 200%;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            translate: -50% -20%;
+            z-index: 3;
+            transition: filter 2s ease;
+        }
+
+        body:hover .character-img {
+            filter: drop-shadow(0px 1px 100px white);
+        }
+
+        .title {
+            width: 100%;
+            position: fixed;
+            text-align: center;
+            top: 5%;
+            left: 50%;
+            translate: -50% -50%;
+            color: white;
+            font-size: 5rem;
+            z-index: 2;
+            font-family: sans-serif;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 3%;
+            left: 50%;
+            translate: -50% -50%;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 3;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            font-family: sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .navbar i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="scene">
+        <img class="bg-img" data-depth="0.2" src="./static/image/bg.png" />
+        <img class="fg-img" data-depth="0.1" src="./static/image/fg.png" />
+    </div>
+    <div id="bg-mask" class="mask"></div>
+    <div class="navbar">
+        <div>
+            <a href="https://songlist.showee.live" target="_blank"><i class="fa fa-align-justify"></i>歌单</a>
+            <a href="https://captain.showee.live" target="_blank"><i class="fa fa-pie-chart"></i>统计</a>
+        </div>
+    </div>
+
+    <div>
+        <h1 class="title">SHOWEE</h1>
+
+    </div>
+    <div id="character"><img class="character-img" src="./static/image/character.png" /></div>
+    <script>
+        const a = document.getElementById("scene");
+        var parallaxInstance = new Parallax(a);
+
+    </script>
+</body>
+
+</html>
