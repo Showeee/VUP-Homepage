@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
-    <link rel="stylesheet"
-        href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>守一 Showee 的主页</title>
+    <meta name="description" content="套皮人，AI方向研二在读，喜欢唱跳game杂谈。 QQ群：740243150 围脖：@迟到早退守某人" />
+    <link rel="icon" type="image/png" sizes="48x48" href="./static/image/favicon.png" />
+    <link rel="canonical" href="https://showee.live"/>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
     <style>
         html,
         body,
@@ -16,19 +17,11 @@
             width: 100%;
             margin: 0;
             overflow: hidden;
-            z-index: 0;
         }
 
-        #scene .bg-img {
-            width: 120%;
-            height: 120%;
-            translate: -10% -10%;
-            object-fit: cover;
-        }
-
-        #scene .fg-img {
-            width: 120%;
-            height: 120%;
+        .bg-img, .fg-img {
+            width: 125%;
+            height: 125%;
             translate: -10% -10%;
             object-fit: cover;
         }
@@ -36,30 +29,41 @@
         .mask {
             position: fixed;
             top: 0;
+	    right: 0;
+	    bottom: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.2);
             transition: background-color 0.5s ease;
         }
 
-        body:hover .mask {
-            background-color: rgba(0, 0, 0, 0.2);
-        }
-
         .character-img {
-            height: 200%;
             position: fixed;
-            top: 50%;
+	    max-height: 90%;
+	    object-fit: contain;
             left: 50%;
-            translate: -50% -20%;
-            z-index: 3;
+	    translate: -50%;
+	    bottom: 0;
             transition: filter 2s ease;
+            filter: drop-shadow(0px 1px 100px white);
         }
 
-        body:hover .character-img {
-            filter: drop-shadow(0px 1px 100px white);
+        @media (hover: hover) {
+            .mask {
+                background-color: rgba(0, 0, 0, 0.8);
+            }
+
+            body:hover .mask {
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+
+            .character-img {
+	        filter: unset;
+	    }
+
+            body:hover .character-img {
+                filter: drop-shadow(0px 1px 100px white);
+            }
+
         }
 
         .title {
@@ -71,7 +75,6 @@
             translate: -50% -50%;
             color: white;
             font-size: 5rem;
-            z-index: 2;
             font-family: sans-serif;
         }
 
@@ -80,51 +83,63 @@
             top: 3%;
             left: 50%;
             translate: -50% -50%;
-            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 3;
         }
 
         .navbar a {
             color: white;
+	    display: flex;
             text-decoration: none;
-            margin: 0 10px;
             font-size: 1.2rem;
+	    line-height: 1.4rem;
             font-family: sans-serif;
             font-weight: bold;
             cursor: pointer;
+	    margin-right: 1rem;
         }
 
-        .navbar i {
-            margin-right: 5px;
-        }
+	.navbar a:last-child {
+	    margin-right: 0;
+	}
+
+	.navbar a img {
+	    height: 1.2rem;
+	    width: 1.2rem;
+	    padding: 0.1rem 0.3rem;
+	}
     </style>
 </head>
 
 <body>
     <div id="scene">
-        <img class="bg-img" data-depth="0.2" src="./static/image/bg.png" />
-        <img class="fg-img" data-depth="0.1" src="./static/image/fg.png" />
+        <img class="bg-img" data-depth="0.5" alt="背景" src="./static/image/bg.webp" />
+        <img class="fg-img" data-depth="0.3" alt="前景" src="./static/image/fg.webp" />
     </div>
     <div id="bg-mask" class="mask"></div>
     <div class="navbar">
-        <div>
-            <a href="https://songlist.showee.live" target="_blank"><i class="fa fa-align-justify"></i>歌单</a>
-            <a href="https://captain.showee.live" target="_blank"><i class="fa fa-pie-chart"></i>统计</a>
-        </div>
+	<a href="https://songlist.showee.live" target="_blank">
+	    <img aria-hidden="true" src="./static/image/align-justify.svg" />
+	    歌单
+	</a>
+	<a href="https://captain.showee.live" target="_blank">
+	    <img aria-hidden="true" src="./static/image/pie-chart.svg" />
+	    统计
+	</a>
     </div>
-
-    <div>
-        <h1 class="title">SHOWEE</h1>
-
-    </div>
-    <div id="character"><img class="character-img" src="./static/image/character.png" /></div>
+    <h1 class="title">SHOWEE</h1>
+    <img class="character-img" alt="人物" src="./static/image/character.webp" />
     <script>
-        const a = document.getElementById("scene");
-        var parallaxInstance = new Parallax(a);
-
+	const body = document.body;
+	document.addEventListener('DOMContentLoaded', function() {
+	    const parallaxInstance = new Parallax(document.getElementById("scene"));
+	    function recalc() {
+	        parallaxInstance.limit(body.clientWidth * 0.2, body.clientHeight * 0.2)
+	    }
+	    const observer = new ResizeObserver(recalc)
+	    observer.observe(body)
+        })
     </script>
 </body>
 
