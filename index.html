@@ -12,19 +12,32 @@
     <style>
         html,
         body,
-        #scene {
+        #scene1,
+	#scene2 {
             height: 100%;
             width: 100%;
             margin: 0;
             overflow: hidden;
+	    position: fixed;
         }
 
-        .bg-img, .fg-img {
+        .bg-img {
             width: 125%;
             height: 125%;
             translate: -10% -10%;
             object-fit: cover;
+	    filter: blur(5px);
         }
+
+	.fg-img {
+            width: 120%;
+            height: 90%;
+	    position: absolute !important;
+	    right: 0;
+	    left: unset !important;
+            translate: 10% -5%;
+            object-fit: cover;
+	}
 
         .mask {
             position: fixed;
@@ -76,6 +89,7 @@
             color: white;
             font-size: 5rem;
             font-family: sans-serif;
+	    text-shadow: 10px 10px 10px #000000;
         }
 
         .navbar {
@@ -86,6 +100,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+	    text-shadow: 1px 1px 10px #000000;
         }
 
         .navbar a {
@@ -108,34 +123,39 @@
 	    height: 1.2rem;
 	    width: 1.2rem;
 	    padding: 0.1rem 0.3rem;
+	    filter: drop-shadow(0 0 3px #000000);
 	}
     </style>
 </head>
 
 <body>
-    <div id="scene">
+    <div id="scene1">
         <img class="bg-img" data-depth="0.5" alt="背景" src="./static/image/bg.webp" />
-        <img class="fg-img" data-depth="0.3" alt="前景" src="./static/image/fg.webp" />
     </div>
     <div id="bg-mask" class="mask"></div>
+    <img class="character-img" alt="人物" src="./static/image/character.webp" />
+    <div id="scene2">
+        <img class="fg-img" data-depth="0.3" alt="前景" src="./static/image/fg.webp" />
+    </div>
     <div class="navbar">
 	<a href="https://songlist.showee.live" target="_blank">
-	    <img aria-hidden="true" src="./static/image/align-justify.svg" />
+	    <img aria-hidden="true" alt="" src="./static/image/align-justify.svg" />
 	    歌单
 	</a>
 	<a href="https://captain.showee.live" target="_blank">
-	    <img aria-hidden="true" src="./static/image/pie-chart.svg" />
+	    <img aria-hidden="true" alt="" src="./static/image/pie-chart.svg" />
 	    统计
 	</a>
     </div>
     <h1 class="title">SHOWEE</h1>
-    <img class="character-img" alt="人物" src="./static/image/character.webp" />
     <script>
 	const body = document.body;
 	document.addEventListener('DOMContentLoaded', function() {
-	    const parallaxInstance = new Parallax(document.getElementById("scene"));
+	    const parallaxInstance1 = new Parallax(document.getElementById("scene1"));
+	    const parallaxInstance2 = new Parallax(document.getElementById("scene2"));
 	    function recalc() {
-	        parallaxInstance.limit(body.clientWidth * 0.2, body.clientHeight * 0.2)
+	        parallaxInstance1.limit(body.clientWidth * 0.2, body.clientHeight * 0.2)
+	        parallaxInstance2.limit(body.clientWidth * 0.2, body.clientHeight * 0.2)
 	    }
 	    const observer = new ResizeObserver(recalc)
 	    observer.observe(body)
